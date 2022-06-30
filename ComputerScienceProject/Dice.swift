@@ -13,7 +13,7 @@ struct Dice:View{
     @State var number1 = 0
     @State var number2 = 0
     @State var number3 = 0
-    
+
     var player: DicePlayer
     
     var body: some View{
@@ -23,10 +23,11 @@ struct Dice:View{
                     TapGesture()
                         .onEnded { _ in
                             print("TAPPED")
-                            
                             updateScore()
                         }
                 )
+              
+                
             HStack{
                 DiceNumber(number: $number2, player: player)
                     .simultaneousGesture(
@@ -58,7 +59,6 @@ struct Dice:View{
             settings.player1.score += number2
             settings.player1.score += number3
             
-            print(settings.player1.score)
         } else {
             settings.player2.score += number1
             settings.player2.score += number2
@@ -66,7 +66,7 @@ struct Dice:View{
             
         }
         
-        print(settings.player1.score)
+//        print(settings.player1.score)
     }
     
 }
@@ -79,11 +79,17 @@ struct Dice_Previews: PreviewProvider {
 
 struct DiceNumber: View {
     @EnvironmentObject var settings : PlayerSettings
-    
+    @State private var isRotated = false
+
     @Binding var number : Int
-    
+    @State var finalNumber = 0
     var player : DicePlayer
     @State private var rotation = 0.0
+    var animation: Animation {
+        Animation.linear
+//            .delay(1.0)
+            .repeatCount(3,autoreverses: false)
+    }
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 10)
@@ -179,25 +185,22 @@ struct DiceNumber: View {
                                 .frame(width:12)
                         }
                     }
-                    
-                    
                 } else if number == 0{
                     VStack{
                         
                     }
                 }
-                
             }
-            
             .padding(.all, 8)
             .frame(width: 70, height:70)
             
         }
-        .rotationEffect(.degrees(rotation))
-        
+        .rotationEffect(Angle.degrees(isRotated ? 360 : 0))
+        .animation(animation, value: isRotated)
         .simultaneousGesture(
             TapGesture()
                 .onEnded { _ in
+                    self.isRotated.toggle()
                     delay()
                 }
         )
@@ -205,53 +208,29 @@ struct DiceNumber: View {
     
     func delay(){
         withAnimation {
+            finalNumber = Int.random(in: 1...6)
+            print(finalNumber)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 self.number = Int.random(in:1...6)
-                for degree in 0...60 {
-                    self.rotation = Double(degree)
-                }                 }
+            }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 self.number = Int.random(in:1...6)
-                for degree in 60...120 {
-                    self.rotation = Double(degree)
-                }
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.number = Int.random(in:1...6)
-                for degree in 120...180 {
-                    self.rotation = Double(degree)
-                }
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
                 self.number = Int.random(in:1...6)
-                for degree in 180...240 {
-                    self.rotation = Double(degree)
-                }
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
                 self.number = Int.random(in:1...6)
-                for degree in 240...300 {
-                    self.rotation = Double(degree)
-                }
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.1) {
-                self.number = Int.random(in:1...6)
-                for degree in 300...360 {
-                    self.rotation = Double(degree)
-                }
-                
-                
-                
+                self.number = finalNumber
+                print(self.number)
+
             }
             
-            //        if player == .player1{
-            //            settings.player1.score += number
-            //            settings.objectWillChange.send()
-            //
-            //            print(settings.player1.score)
-            //        } else {
-            //            settings.player2.score += number
-            //        }
         }
     }
 }
