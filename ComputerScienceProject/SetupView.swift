@@ -51,7 +51,7 @@ struct SetupView: View {
                 }
                 
                
-                NavigationLink(destination: GameScreen(player1: settings.player1, player2: settings.player2)            .environmentObject(settings)
+                NavigationLink(destination: GameScreen(round: settings.round, player1: settings.player1, player2: settings.player2)            .environmentObject(settings)
 ) {
                     Text("Next")
                         .foregroundColor(Color.init(uiColor: UIColor(named: "Text")!))

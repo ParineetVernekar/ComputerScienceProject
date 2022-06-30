@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct GameScreen: View {
-//    @EnvironmentObject var settings : PlayerSettings
+    @ObservedObject var round : Round
     @ObservedObject var player1 : Player
     @ObservedObject var player2 : Player
-    
+    @State var turn = DicePlayer.player1
     @State var player1Dice1 = 0
     @State var player1Dice2 = 0
     @State var player1Dice3 = 0
@@ -30,21 +30,38 @@ struct GameScreen: View {
                 .ignoresSafeArea()
             HStack{
                 HStack{
+//                    if turn == .player1{
+                        VStack {
+                            HStack {
+                                ScoreView(player: player1, turn: $turn)
+                                Spacer()
+                            }
+                            Dice(player: .player1, turn: $turn)
+                        }
+//                    }
                     
-                    VStack {
-                        ScoreView(player: player1)
-                        Dice(player: .player1)
-                    }
-
                     Spacer()
-//                    VStack {
-//                        ScoreView(player: settings.player2)
-//                        DiceNumber(number: $player2Dice1, rolls: $player2Rolls, player: settings.player2)
-//                        HStack {
-//                            DiceNumber(number: $player2Dice2, rolls: $player2Rolls, player: settings.player2)
-//                            DiceNumber(number: $player2Dice3, rolls: $player2Rolls, player: settings.player2)
-//
-//                        }.padding(.top)
+                    VStack {
+                        Text("Round \(round.round)")
+                            .font(.title)
+                            .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color.init(uiColor: UIColor(named: "Secondary")!))
+                            .frame(width:150, height: 50)
+                        )
+
+                        Spacer()
+                    }
+                    .padding(.top, 15)
+                    Spacer()
+//                    if turn == .player2{
+                        VStack {
+                            HStack {
+                                Spacer()
+                                ScoreView(player: player2, turn: $turn)
+                            }
+                            Dice(player: .player2, turn: $turn)
+                        }
 //                    }
                 }
             }
@@ -56,7 +73,7 @@ struct GameScreen: View {
 
 struct GameScreen_Previews: PreviewProvider {
     static var previews: some View {
-        GameScreen(player1: Player(), player2: Player())
+        GameScreen(round: Round(), player1: Player(playerNumber: .player1), player2: Player(playerNumber: .player2))
             .environmentObject(PlayerSettings())
             .previewInterfaceOrientation(.landscapeLeft)
     }
@@ -64,6 +81,8 @@ struct GameScreen_Previews: PreviewProvider {
 
 struct ScoreView: View {
     @ObservedObject var player : Player
+    @Binding var turn : DicePlayer
+    
     var body: some View {
         VStack {
             HStack {
@@ -84,7 +103,7 @@ struct ScoreView: View {
         }
         .background(
             RoundedRectangle(cornerRadius: 9)
-                .fill(Color.init(uiColor: UIColor(named: "Secondary")!))
+                .fill(turn == player.playerNumber ? Color.green : Color.init(uiColor: UIColor(named: "Secondary")!))
                 .frame(width:150, height: 50)
             
         )
