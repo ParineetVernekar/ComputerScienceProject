@@ -38,7 +38,7 @@ class Player : ObservableObject{
     @Published var imageName = "swordsman"
     @Published var name = "Pari"
     @Published var playerNumber : DicePlayer
-    
+    @Published var isWinner = false
     init(playerNumber: DicePlayer){
         self.playerNumber = playerNumber
     }
@@ -58,4 +58,11 @@ enum DicePlayer {
     case player1
     case player2
     case endGame
+}
+
+
+struct Score: Codable {
+    let id = UUID()
+    let name : String
+    let score : Int
 }

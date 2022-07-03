@@ -15,7 +15,8 @@ struct GameScreen: View {
     @State var player1Dice1 = 0
     @State var player1Dice2 = 0
     @State var player1Dice3 = 0
-    
+    @Environment(\.presentationMode) var presentationMode
+
     @State var player1Rolls = 0
     
     @State var player2Dice1 = 0
@@ -42,7 +43,7 @@ struct GameScreen: View {
                     
                     Spacer()
                     VStack {
-                        Text("Round \(round.round)")
+                        Text(turn == .endGame ? "Game over!" : "Round \(round.round)")
                             .font(.title)
                             .background(
                         RoundedRectangle(cornerRadius: 10)
@@ -66,8 +67,93 @@ struct GameScreen: View {
                 }
             }
             .padding()
+            
+            if turn == .endGame{
+                Color.black
+                    .ignoresSafeArea()
+                    .opacity(0.3)
+                ZStack {
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color.white)
+                        .frame(width: UIScreen.main.bounds.width/2, height: 200)
+                    .padding(.top, 20)
+                    VStack {
+                        HStack {
+                            HStack {
+                                Image("\(player1.imageName)")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width:75)
+                                VStack {
+                                    HStack {
+                                        Text("\(player1.name) \(player1.isWinner ? "🎉":"")")
+                                            .font(.title)
+                                        Spacer()
+                                    }
+                                    HStack {
+                                        Text("\(player1.score)")
+                                        Spacer()
+                                    }
+
+                                }
+                            }
+                            Spacer()
+                            HStack {
+                                VStack {
+                                    HStack {
+                                        Spacer()
+                                        Text("\(player2.name) \(player2.isWinner ? "🎉":"")")
+                                            .font(.title)
+                                    }
+
+                                    HStack {
+                                        Spacer()
+                                        Text("\(player2.score)")
+
+                                    }
+                                }
+                                Image("\(player2.imageName)")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width:75)
+                            }
+                        }
+                        .padding()
+                        NavigationLink(destination: ContentView()) {
+                            Text("Home")
+                        }
+                        Button {
+                            print("Ok")
+                        } label: {
+                            Text("View Leaderboard")
+                        }
+
+                        Spacer()
+                    }
+                    .padding(.top, 60)
+
+                    
+                }
+                .frame(width: UIScreen.main.bounds.width/2, height: 300)
+
+            }
         }
         
+    }
+}
+
+struct FinalScoreView: View{
+    var player : Player
+    var body: some View{
+        Image("\(player.imageName)")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width:75)
+        VStack {
+            Text("\(player.name)")
+            Text("\(player.score)")
+
+        }
     }
 }
 

@@ -127,7 +127,9 @@ struct Dice:View{
                     } else if (number1 == 6 && number2 == 6) ||  (number2 == 6 && number3 == 6) || (number1 == 6 && number3 == 6) {
                         settings.player2.score += 6
                         print("double 6!")
-                    } else if ((number1 > number2) && (number1 > number3)){
+                    }
+                    
+                    if ((number1 > number2) && (number1 > number3)){
                         print("number 1 largest!")
                         settings.player2.score += number1
                     } else if ((number2 > number1) && (number2 > number3)){
@@ -173,7 +175,43 @@ struct Dice:View{
                     turn = .player2
                 } else if turn == .player2{
                     turn = .player1
-                    if settings.round.round == 6{turn = .endGame} else{
+                    if (settings.round.round == 6) && (settings.player1.score != settings.player2.score){
+                        turn = .endGame
+                        if(settings.player1.score > settings.player2.score){
+                            settings.player1.isWinner = true
+                            
+                            if let data = UserDefaults.standard.data(forKey: "scores") {
+                                do {
+                                      // Create JSON Decoder
+                                      let decoder = JSONDecoder()
+
+                                      // Decode Note
+                                      let score = try decoder.decode(Score.self, from: data)
+
+                                  } catch {
+                                      print("Unable to Decode Note (\(error))")
+                                  }
+                            }
+
+                            
+                            var score = Score(name: settings.player1.name, score: settings.player1.score)
+                            do {
+                                let encoder = JSONEncoder()
+                                let data = try encoder.encode(score)
+
+                                 // Write/Set Data
+                                 UserDefaults.standard.set(data, forKey: "scores")
+                            } catch{
+                                print("Cannot encode")
+                            }
+                            
+                        } else{
+                            settings.player2.isWinner = true
+                           
+
+                        }
+                        
+                    } else{
                         settings.round.round += 1
                     }
 
