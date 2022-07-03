@@ -8,9 +8,12 @@
 import SwiftUI
 
 struct SetupView: View {
-    
+    // initialise PlayerSettings as settings to pass environment object
     @StateObject var settings = PlayerSettings()
+    // to store if view is presented or not
+    @Binding var rootIsActive : Bool
 
+    // to store if text field is selected or not
     @FocusState private var usernameFieldIsFocused: Bool
 
     var body: some View {
@@ -27,6 +30,7 @@ struct SetupView: View {
                                 .font(.title3)
                             Spacer()
                         }
+                        // text field for username entry
                         TextField("Player 1", text: $settings.player1.name)
                             .textFieldStyle(.roundedBorder)
                             .padding(.leading, 10)
@@ -43,6 +47,8 @@ struct SetupView: View {
 
                             Spacer()
                         }
+                        // text field for username entry
+
                         TextField("Player 2", text: $settings.player2.name)
                             .textFieldStyle(.roundedBorder)
                             .padding(.leading, 10)
@@ -50,8 +56,8 @@ struct SetupView: View {
 
                 }
                 
-               
-                NavigationLink(destination: GameScreen(round: settings.round, player1: settings.player1, player2: settings.player2)            .environmentObject(settings)
+               // navigate to gamescreen with environment object, passing players, round and isactive
+                NavigationLink(destination: GameScreen(round: settings.round, player1: settings.player1, player2: settings.player2, rootIsActive: $rootIsActive)            .environmentObject(settings)
 ) {
                     Text("Next")
                         .foregroundColor(Color.init(uiColor: UIColor(named: "Text")!))
@@ -60,7 +66,10 @@ struct SetupView: View {
                             RoundedRectangle(cornerRadius: 10)
                                 .fill(Color.init(uiColor: UIColor(named: "Secondary")!))
                         )
-                }
+                }            .isDetailLink(false)
+                //disable next button if either fields are empty
+.disabled((settings.player1.name != "") && (settings.player2.name != "") ? false : true)
+                
                 .onAppear{
                     usernameFieldIsFocused.toggle()
                 
@@ -74,6 +83,6 @@ struct SetupView: View {
 
 struct SetupView_Previews: PreviewProvider {
     static var previews: some View {
-        SetupView()
+        SetupView( rootIsActive: .constant(true))
     }
 }

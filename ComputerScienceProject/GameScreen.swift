@@ -8,22 +8,23 @@
 import SwiftUI
 
 struct GameScreen: View {
+    // observe values of round, player1 and player2 passed from parent
+    // on value change, view updates
     @ObservedObject var round : Round
     @ObservedObject var player1 : Player
     @ObservedObject var player2 : Player
+    
+    //store current turn using DicePlayer enum
     @State var turn = DicePlayer.player1
-    @State var player1Dice1 = 0
-    @State var player1Dice2 = 0
-    @State var player1Dice3 = 0
+    
+    // store way of presentation leaderboard (e.g modal)
     @Environment(\.presentationMode) var presentationMode
+    
+    // to store if view is presented or not
+    @Binding var rootIsActive : Bool
 
-    @State var player1Rolls = 0
-    
-    @State var player2Dice1 = 0
-    @State var player2Dice2 = 0
-    @State var player2Dice3 = 0
-    
-    @State var player2Rolls = 0
+    // store whether leaderboard view should be presented or not
+    @State var showLeaderboard = false
 
     var body: some View {
         ZStack {
@@ -31,7 +32,7 @@ struct GameScreen: View {
                 .ignoresSafeArea()
             HStack{
                 HStack{
-//                    if turn == .player1{
+                    // player1 side
                         VStack {
                             HStack {
                                 ScoreView(player: player1, turn: $turn)
@@ -39,10 +40,9 @@ struct GameScreen: View {
                             }
                             Dice(player: .player1, turn: $turn)
                         }
-//                    }
-                    
                     Spacer()
                     VStack {
+                        // show round number
                         Text(turn == .endGame ? "Game over!" : "Round \(round.round)")
                             .font(.title)
                             .background(
@@ -55,7 +55,7 @@ struct GameScreen: View {
                     }
                     .padding(.top, 15)
                     Spacer()
-//                    if turn == .player2{
+                    // player2 side
                         VStack {
                             HStack {
                                 Spacer()
@@ -63,10 +63,12 @@ struct GameScreen: View {
                             }
                             Dice(player: .player2, turn: $turn)
                         }
-//                    }
                 }
             }
             .padding()
+            
+            //when game over
+            // overlay game view with finish view and opacity
             
             if turn == .endGame{
                 Color.black
@@ -86,6 +88,7 @@ struct GameScreen: View {
                                     .frame(width:75)
                                 VStack {
                                     HStack {
+                                        // show winner with emoji
                                         Text("\(player1.name) \(player1.isWinner ? "🎉":"")")
                                             .font(.title)
                                         Spacer()
@@ -102,6 +105,7 @@ struct GameScreen: View {
                                 VStack {
                                     HStack {
                                         Spacer()
+                                        // show winner with emoji
                                         Text("\(player2.name) \(player2.isWinner ? "🎉":"")")
                                             .font(.title)
                                     }
@@ -119,14 +123,41 @@ struct GameScreen: View {
                             }
                         }
                         .padding()
-                        NavigationLink(destination: ContentView()) {
-                            Text("Home")
+                        
+                        HStack{
+                            // home navigation
+                            // pop to root of navigation stack
+                            Button{
+                                 self.rootIsActive = false
+                            } label:{
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 4)
+                                        .fill(Color.init(uiColor: UIColor.init(named: "Background")!))
+                                        .frame(width:70, height:30)
+                                    Text("Home")
+                                        .font(.headline)
+                                        .foregroundColor(Color.white)
+                                }
+                                
+                            }
+                            // leaderboard navigation
+
+                            Button {
+                                showLeaderboard.toggle()
+                            } label: {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 4)
+                                        .fill(Color.init(uiColor: UIColor.init(named: "Background")!))
+                                        .frame(width:120, height:30)
+                                    Text("Leaderboard")
+                                        .font(.headline)
+
+                                        .foregroundColor(Color.white)
+                                }                            }.sheet(isPresented: $showLeaderboard) {
+                                    Leaderboard( shouldPopToRootView: self.$rootIsActive)
+                            }
                         }
-                        Button {
-                            print("Ok")
-                        } label: {
-                            Text("View Leaderboard")
-                        }
+
 
                         Spacer()
                     }
@@ -134,40 +165,29 @@ struct GameScreen: View {
 
                     
                 }
-                .frame(width: UIScreen.main.bounds.width/2, height: 300)
+                .frame(width: UIScreen.main.bounds.width/2.5, height: 260)
+                .navigationBarBackButtonHidden(true)
 
             }
+
         }
         
     }
 }
 
-struct FinalScoreView: View{
-    var player : Player
-    var body: some View{
-        Image("\(player.imageName)")
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .frame(width:75)
-        VStack {
-            Text("\(player.name)")
-            Text("\(player.score)")
-
-        }
-    }
-}
-
 struct GameScreen_Previews: PreviewProvider {
     static var previews: some View {
-        GameScreen(round: Round(), player1: Player(playerNumber: .player1), player2: Player(playerNumber: .player2))
+        GameScreen(round: Round(), player1: Player(playerNumber: .player1), player2: Player(playerNumber: .player2), rootIsActive: .constant(true))
             .environmentObject(PlayerSettings())
             .previewInterfaceOrientation(.landscapeLeft)
     }
 }
 
+// show current score
 struct ScoreView: View {
     @ObservedObject var player : Player
     @Binding var turn : DicePlayer
+    // binding to respond to turn updates
     
     var body: some View {
         VStack {

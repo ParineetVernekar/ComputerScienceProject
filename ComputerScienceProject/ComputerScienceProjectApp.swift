@@ -12,6 +12,15 @@ struct ComputerScienceProjectApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .onAppear{
+                    do{
+                        // initialise app by setting the userimage to the swordsman image
+                        try UserDefaults.standard.objectSet("swordsman", forKey: "userImage")
+
+                    } catch{
+                        print(error.localizedDescription)
+                    }
+                }
         }
     }
 }

@@ -7,18 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8547C92A2872106A0030AB8A /* Leaderboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8547C9292872106A0030AB8A /* Leaderboard.swift */; };
+		8547C92C287232C70030AB8A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8547C92B287232C70030AB8A /* SettingsView.swift */; };
 		8560A0FD2864DF9400CC0295 /* ComputerScienceProjectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8560A0FC2864DF9400CC0295 /* ComputerScienceProjectApp.swift */; };
 		8560A0FF2864DF9400CC0295 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8560A0FE2864DF9400CC0295 /* ContentView.swift */; };
 		8560A1012864DF9600CC0295 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8560A1002864DF9600CC0295 /* Assets.xcassets */; };
 		8560A1042864DF9600CC0295 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8560A1032864DF9600CC0295 /* Preview Assets.xcassets */; };
 		8560A11128650EB300CC0295 /* RotateScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8560A11028650EB300CC0295 /* RotateScreen.swift */; };
 		857F611E286B9BF900B2B6E9 /* Dice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857F611D286B9BF900B2B6E9 /* Dice.swift */; };
-		85B4534828665C720068897E /* PlayerSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B4534728665C720068897E /* PlayerSettings.swift */; };
+		85B4534828665C720068897E /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B4534728665C720068897E /* Helper.swift */; };
 		85B4534C286668B90068897E /* GameScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B4534B286668B90068897E /* GameScreen.swift */; };
 		85F5056B286A564F0040F901 /* SetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F5056A286A564F0040F901 /* SetupView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8547C9292872106A0030AB8A /* Leaderboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Leaderboard.swift; sourceTree = "<group>"; };
+		8547C92B287232C70030AB8A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		8560A0F92864DF9400CC0295 /* ComputerScienceProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ComputerScienceProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8560A0FC2864DF9400CC0295 /* ComputerScienceProjectApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComputerScienceProjectApp.swift; sourceTree = "<group>"; };
 		8560A0FE2864DF9400CC0295 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -26,7 +30,7 @@
 		8560A1032864DF9600CC0295 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		8560A11028650EB300CC0295 /* RotateScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotateScreen.swift; sourceTree = "<group>"; };
 		857F611D286B9BF900B2B6E9 /* Dice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dice.swift; sourceTree = "<group>"; };
-		85B4534728665C720068897E /* PlayerSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerSettings.swift; sourceTree = "<group>"; };
+		85B4534728665C720068897E /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		85B4534B286668B90068897E /* GameScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScreen.swift; sourceTree = "<group>"; };
 		85F5056A286A564F0040F901 /* SetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -66,8 +70,10 @@
 				8560A11028650EB300CC0295 /* RotateScreen.swift */,
 				85F5056A286A564F0040F901 /* SetupView.swift */,
 				85B4534B286668B90068897E /* GameScreen.swift */,
+				8547C92B287232C70030AB8A /* SettingsView.swift */,
+				8547C9292872106A0030AB8A /* Leaderboard.swift */,
 				857F611D286B9BF900B2B6E9 /* Dice.swift */,
-				85B4534728665C720068897E /* PlayerSettings.swift */,
+				85B4534728665C720068897E /* Helper.swift */,
 				8560A1002864DF9600CC0295 /* Assets.xcassets */,
 				8560A1022864DF9600CC0295 /* Preview Content */,
 			);
@@ -153,10 +159,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				8560A11128650EB300CC0295 /* RotateScreen.swift in Sources */,
+				8547C92A2872106A0030AB8A /* Leaderboard.swift in Sources */,
 				85B4534C286668B90068897E /* GameScreen.swift in Sources */,
+				8547C92C287232C70030AB8A /* SettingsView.swift in Sources */,
 				8560A0FF2864DF9400CC0295 /* ContentView.swift in Sources */,
 				857F611E286B9BF900B2B6E9 /* Dice.swift in Sources */,
-				85B4534828665C720068897E /* PlayerSettings.swift in Sources */,
+				85B4534828665C720068897E /* Helper.swift in Sources */,
 				8560A0FD2864DF9400CC0295 /* ComputerScienceProjectApp.swift in Sources */,
 				85F5056B286A564F0040F901 /* SetupView.swift in Sources */,
 			);
@@ -293,8 +301,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortraitUpsideDown;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -322,8 +330,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortraitUpsideDown;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
